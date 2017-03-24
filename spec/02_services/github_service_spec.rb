@@ -64,10 +64,12 @@ describe 'GithubService' do
     end
   end
 
+
+  #------ as cloned 3/24/2017-------------
   describe '#create_repo' do
     it "sends the correct POST request" do
       stubbed = stub_request(:post, "https://api.github.com/user/repos").
-      with(body: {name: "a-new-repo"}.to_json, 
+      with(body: {'name' => 'a-new-repo'}.to_json, 
       headers: {'Authorization'=>'token 1'})
       
       service = GithubService.new({"access_token" => "1"})
@@ -76,4 +78,21 @@ describe 'GithubService' do
       expect(stubbed).to have_been_requested
     end
   end
+
+#-------- as corrected in https://github.com/learn-co-students/rails-refactoring-apis-v-000/issues/62 ------
+
+# describe '#create_repo' do
+#     it "sends the correct POST request" do
+#       stubbed = stub_request(:post, "https://api.github.com/user/repos").
+#         with(body: {"name": "a-new-repo"}.to_json, #CHANGED
+#         headers: {'Authorization'=>'token 1'})
+
+#       service = GithubService.new({"access_token" => "1"})
+#       service.create_repo("a-new-repo")
+
+#       expect(stubbed).to have_been_requested
+#     end
+#   end
+ 
+
 end

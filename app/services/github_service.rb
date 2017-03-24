@@ -14,35 +14,11 @@ class GithubService
      @access_token = access_hash["access_token"]
   end 
 
- 
-#################
-  #   user_resp = Faraday.get("https://api.github.com/user") do |req|
-  #     req['Authorization'] = "token #{session[:token]}"
-  #     req['Accept'] = 'application/json'
-  #   end
-  #   user_parse = JSON.parse(user_resp.body)
-  #   session[:username] = user_parse["login"]
-
-  #   redirect_to '/'
-  # end
-#################
-
-
   def get_username 
     user_response = Faraday.get "https://api.github.com/user", {}, {'Authorization' => "token #{self.access_token}", 'Accept' => 'application/json'}
     user_json = JSON.parse(user_response.body)
     user_json["login"]
   end
-
-
-  #   user_resp = Faraday.get("https://api.github.com/user") do |req|
-  #     req['Authorization'] = "token #{session[:token]}"
-  #     req['Accept'] = 'application/json'
-  #   end
-  #   user_parse = JSON.parse(user_resp.body)
-  #   session[:username] = user_parse["login"]
-
-
 
   def get_repos
     response = Faraday.get "https://api.github.com/user/repos", {}, {'Authorization' => "token #{self.access_token}", 'Accept' => 'application/json'}
@@ -53,5 +29,4 @@ class GithubService
   def create_repo(name)
     Faraday.post "https://api.github.com/user/repos", {name: name}.to_json, {'Authorization' => "token #{self.access_token}", 'Accept' => 'application/json'}
   end
-
 end
